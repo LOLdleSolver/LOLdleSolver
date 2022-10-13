@@ -22,6 +22,8 @@ with console.status("Preparing Browser..."):
 won = False
 steps = 0
 
+result = None
+
 
 while won is False:
 
@@ -32,18 +34,16 @@ while won is False:
     else:
         champ = data.get_next_champ(mode)
 
-    if driver.check_for_victory():
-        Formatter.winning_screen(champ["championName"], steps)
-        won = True
-        break
-    
+
     Formatter.print_new_champ(champ["championName"])
 
     
     with console.status("Waiting for result..."):
         result = driver.input_champ(champ["championName"])
+        if len([r for r in result.values() if r == Results.GOOD]) >= 6:
+            won = True
 
-    if result is None: break
+    if result is None and steps > 0: break
 
     steps += 1
 
@@ -88,10 +88,8 @@ while won is False:
                     data.delete_entries_with_exact(category, str(i)) # Delete champs with higher release year than A (All champs between the guessed release year and 2022)
 
 
-
-    if driver.check_for_victory():
+    if won:
         Formatter.winning_screen(champ["championName"], steps)
-        won = True
     else:
         console.print("\n[bold red]" + str(len(data.champs)) + "[/bold red] {} remaining\n".format("Champs" if len(data.champs) > 1 else "Champ"))   
         console.print(data.get_champ_table())    
