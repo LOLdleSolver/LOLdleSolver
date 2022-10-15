@@ -81,27 +81,17 @@ class Data:
         for champ in self.champs:
             score = 0
 
-            # resource
-            if champ[Categories.RESOURCE.value] == "Mana":
-                score += 1000
-            else:
-                score += self._get_number_of_occurences_for(Categories.RESOURCE, champ[Categories.RESOURCE.value])
-
-
             # year 
             score -= 50 * abs(median_year - int(champ[Categories.RELEASE_YEAR.value]))
 
-            # position
-            for position in champ[Categories.POSITION.value]:
-                score += self._get_number_of_occurences_for(Categories.POSITION, position)
 
-            # species
-            for species in champ[Categories.SPECIES.value]:
-                score += self._get_number_of_occurences_for(Categories.SPECIES, species)
-
-            # regions
-            for region in champ[Categories.REGION.value]:
-                score += self._get_number_of_occurences_for(Categories.REGION, region)
+            # GENDER and RANGE_TYPE are not considered, because they both have only two values -> Enough information is gathered either way
+            for c in [Categories.RESOURCE, Categories.POSITION, Categories.SPECIES, Categories.REGION]:
+                if isinstance(champ[c.value], str):
+                    score += self._get_number_of_occurences_for(c, champ[c.value])
+                else:
+                    for v in champ[c.value]:
+                        score += self._get_number_of_occurences_for(c, v)
 
             
             scores[champ["championName"]] = score

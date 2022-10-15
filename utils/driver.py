@@ -18,6 +18,7 @@ class Driver:
         # Setup
         options = webdriver.ChromeOptions()
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
+        #options.add_argument("--headless")
         driver = webdriver.Chrome(options=options, service=Service(ChromeDriverManager().install()))
 
         self.driver = driver

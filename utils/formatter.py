@@ -24,7 +24,7 @@ class Formatter:
         console.rule("Now guessing: [bold cyan]" + champ)
 
 
-    def winning_screen(champ: str, steps: int):
+    def winning_screen(champ: str, steps: int) -> bool:
         console.print("\n")
         console.rule("[bold green]YOU WON")
         #console.print(panel.Panel("[green bold]YOU WON!!![/green bold]\n\nGuesses: [red bold]" + str(steps) + "[/red bold]\n\nThe winning champion was:\n[bold cyan]" + champ, padding=(2, 20)), justify="center")
@@ -35,7 +35,9 @@ class Formatter:
         
         if close:
             console.print("Goodbye!")
-            sys.exit()
+            return True
+
+        return False
 
     
     def print_deletion_text(count: int, category: str, verb: str, value: str):

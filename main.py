@@ -1,4 +1,5 @@
 from datetime import datetime
+import sys
 
 from utils.driver import Driver
 from utils.data import Data
@@ -89,7 +90,10 @@ while won is False:
 
 
     if won:
-        Formatter.winning_screen(champ["championName"], steps)
+        if Formatter.winning_screen(champ["championName"], steps):
+            driver.driver.quit()
+            sys.exit()
+
     else:
         console.print("\n[bold red]" + str(len(data.champs)) + "[/bold red] {} remaining\n".format("Champs" if len(data.champs) > 1 else "Champ"))   
-        console.print(data.get_champ_table())    
+        console.print(data.get_champ_table())
