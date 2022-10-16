@@ -41,6 +41,7 @@ while won is False:
     
     with console.status("Waiting for result..."):
         result = driver.input_champ(champ["championName"])
+        
         if len([r for r in result.values() if r == Results.GOOD]) >= 6:
             won = True
 
