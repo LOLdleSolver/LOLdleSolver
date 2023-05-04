@@ -70,14 +70,10 @@ while won is False:
                     data.delete_entries_without(category, champ[category.value][0]) # delete champs without A
                     data.delete_entries_with_exact(category, champ[category.value]) # delete champs with A and only A
 
-                elif len(champ[category.value]) == 2: # Champ has A + B and is partially correct -> desired champ has A or B, but not A and B
+                else: # Champ has A + B and is partially correct -> desired champ has A or B, but not A and B
                     data.delete_entries_with_exact(category, champ[category.value]) # delete champs that have exactly A + B
-                    data.delete_entries_without_all(category, champ[category.value][0], champ[category.value][1]) # keep champs with either A or B
-
-                else: # Champ has A + B + C and is partially correct -> desired champ has A or B or C, but not A and B and C
-                    data.delete_entries_with_exact(category, champ[category.value]) # delete champs that have exactly A + B + C
-                    data.delete_entries_without_all(category, champ[category.value][0], champ[category.value][1], champ[category.value][2]) # keep champs with A or B or C
-
+                    data.delete_entries_without_all(category, *champ[category.value]) # keep champs with either A or B
+                
                 
             elif result[category.value] == Results.SUPERIOR:            
                 # Release year is higher than A

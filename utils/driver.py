@@ -15,6 +15,8 @@ from utils.enums import Results, Categories
 
 class Driver:
     def __init__(self):
+        self.ready = False
+
         # Setup
         options = webdriver.ChromeOptions()
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
@@ -23,18 +25,17 @@ class Driver:
 
         self.driver = driver
 
-        driver.get("http://www.loldle.net")
-
-
-        # Click button
-        button = driver.find_element(By.CLASS_NAME, "button-img")
-        button.click()
+        driver.get("https://loldle.net/classic")
 
         try:
-            self.input = Wait(self.driver, timeout=10).until(EC.presence_of_element_located((By.XPATH, "//input[@placeholder='Type champion name ...']")))
+            self.input = Wait(self.driver, timeout=10).until(EC.presence_of_element_located((By.XPATH, "//input[@placeholder='Champion-Namen eingeben ...']")))
         
         except TimeoutException:
             print("Loading took to long...")
+            return
+    
+        except Exception as e:
+            print(e)
             return
 
 

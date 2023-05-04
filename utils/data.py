@@ -20,7 +20,6 @@ class Data:
     def delete_entries_with(self, category: Categories, value: str):
         filtered_list = [champ for champ in self.champs if not value in champ[category.value]]
 
-        # print(str(len(self.champs) - len(filtered_list)) + " Einträge gelöscht - Alle einträge mit " , values , " wurden gelöscht")
         Formatter.print_deletion_text(len(self.champs) - len(filtered_list), category.value, "includes (or is equal to)", value)
 
         self.champs = filtered_list
@@ -28,7 +27,6 @@ class Data:
     def delete_entries_with_exact(self, category: Categories, values):
         filtered_list = [champ for champ in self.champs if not values == champ[category.value]]
 
-        #print(str(len(self.champs) - len(filtered_list)) + " Einträge gelöscht - Alle einträge mit genau " , values , " wurden gelöscht")
         Formatter.print_deletion_text(len(self.champs) - len(filtered_list), category.value, "is equal to", values if isinstance(values, str) else ", ".join(values))
 
         self.champs = filtered_list
@@ -36,24 +34,21 @@ class Data:
     def delete_entries_without(self, category: Categories, value: str):
         filtered_list = [champ for champ in self.champs if value in champ[category.value]]
 
-        #print(str(len(self.champs) - len(filtered_list)) + " Einträge gelöscht - Alle einträge, die NICHT " + value + " enthalten wurden gelöscht")
-        Formatter.print_deletion_text(len(self.champs) - len(filtered_list), category.value, "includes (or is equal to)", value)
+        Formatter.print_deletion_text(len(self.champs) - len(filtered_list), category.value, "does not include", value)
 
         self.champs = filtered_list
 
     def delete_entries_without_exact(self, category: Categories, values):
         filtered_list = [champ for champ in self.champs if values == champ[category.value]]
 
-        #print(str(len(self.champs) - len(filtered_list)) + " Einträge gelöscht - Alle einträge mit nicht genau " , values , " wurden gelöscht")
-        Formatter.print_deletion_text(len(self.champs) - len(filtered_list), category.value, "is equal to", values if isinstance(values, str) else ", ".join(values))
+        Formatter.print_deletion_text(len(self.champs) - len(filtered_list), category.value, "is not equal to", values if isinstance(values, str) else ", ".join(values))
 
         self.champs = filtered_list
 
 
-    def delete_entries_without_all(self, category: Categories, value1: str, value2: str, value3: str = ""):
-        filtered_list = [champ for champ in self.champs if value1 in champ[category.value] or value2 in champ[category.value] or value3 in champ[category.value]]
+    def delete_entries_without_all(self, category: Categories, value1: str, value2: str, value3: str = "", value4: str = "", value5: str = ""):
+        filtered_list = [champ for champ in self.champs if value1 in champ[category.value] or value2 in champ[category.value] or value3 in champ[category.value] or value4 in champ[category.value] or value5 in champ[category.value]]
 
-        #print(str(len(self.champs) - len(filtered_list)) + " Einträge gelöscht - Alle einträge ohne entweder " + value1 + " oder " + value2 + " wurden gelöscht")
         Formatter.print_deletion_text(len(self.champs) - len(filtered_list), category.value, "does not include", value1 + " or " + value2)
 
         self.champs = filtered_list
@@ -98,8 +93,8 @@ class Data:
 
 
         scores = dict(sorted(scores.items(), key=lambda item: item[1], reverse=False if mode == "worst" else True))
-        #max_score = scores.values()[-1]
-        #console.print(scores)
+
+
         Formatter.print_top_picks(list(scores)[:3], list(scores.values())[:3])
 
 
